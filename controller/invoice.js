@@ -5,7 +5,14 @@ const Customer = require("../model/customer");
 // create new invoice
 
 const newInvoice = async (req, res) => {
-  const { customerId, invoiceDate, stateOfSupply, items } = req.body;
+ 
+  const data = req.body;
+
+  const customerId = data.customer.customerId;
+  const invoiceDate = data.invoiceDetails.invoiceDate;
+  const stateOfSupply = data.invoiceDetails.stateOfSupply;
+  const items = data.items;
+
   const customer = await Customer.findById(customerId);
   if (!customer) {
     return res.status(404).send({ message: "Customer not found" });
@@ -48,5 +55,6 @@ const newInvoice = async (req, res) => {
   res.status(201).send(newInvoice);
 };
 
+  
 
-module.exports={newInvoice}
+module.exports = { newInvoice };
